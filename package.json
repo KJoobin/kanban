@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 4000",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 4000",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint": "eslint '**/*.{js,jsx,ts,tsx}'",
     "test": "jest -c test/jest.config.js",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run --config video=false",
-    "cypress:test": "start-server-and-test start http://localhost:3000 cypress:run"
+    "cypress:test": "start-server-and-test start http://localhost:4000 cypress:run"
   },
   "dependencies": {
     "next": "12.0.7",
