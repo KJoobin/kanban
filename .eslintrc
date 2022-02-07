@@ -15,6 +15,9 @@
     "browser": true,
     "amd": true
   },
+  "rules": {
+    "indent": ["error", 2]
+  },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",

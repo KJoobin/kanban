@@ -5,6 +5,14 @@ module.exports = {
     "@storybook/addon-essentials",
     "@storybook/addon-controls",
     "@storybook/addon-knobs",
+    {
+      name: '@storybook/addon-postcss',
+      options: {
+        postcssLoaderOptions: {
+          implementation: require('postcss'),
+        },
+      },
+    },
   ],
   webpackFinal: async (config) => {
     return config;

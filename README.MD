@@ -31,6 +31,22 @@ superplate is a Next.js all-in-one project generator. Create your project with t
 
 To learn more about **superplate**, please check out the [Documentation](https://github.com/pankod/superplate).
 
+## 계획
+
+### 1.0.0
+#### 카드
+- [ ] ID
+- [ ] Created_at
+- [ ] Updated_at
+- [ ] 상태
+- [ ] 제목
+- [ ] 내용 
+
+#### 카드 리스트
+- [ ] 새 카드 만들기
+- [ ] 카드 상태에 따라 카드 정렬
+
+## 기술 스택
 
 ### **TailwindCSS**
 
