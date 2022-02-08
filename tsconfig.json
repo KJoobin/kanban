@@ -43,6 +43,12 @@
       "@recoil": [
         "src/recoil"
       ],
+      "@util/*": [
+        "src/utils/*"
+      ],
+      "@util": [
+        "src/utils"
+      ],
       "@test/*": [
         "test/*"
       ],
