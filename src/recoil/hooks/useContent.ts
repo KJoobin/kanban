@@ -1,16 +1,22 @@
-import React from "react";
-import { useRecoilState } from "recoil";
+import React, { useRef, useState } from "react";
 
-import { contentState } from "@recoil/atoms";
+const DEBOUNCE = 300;
 
 export const useContent: () => [string, { onChange: React.FormEventHandler<HTMLElement> }] = () => {
-  const [content, setContent] = useRecoilState<string>(contentState);
+  const [content, setContent] = useState<string>("");
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   const onChange:React.FormEventHandler<HTMLElement> = (e) => {
     const target = e.target as HTMLElement;
     const { textContent } = target;
 
-    setContent(textContent || "");
+    if(timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    
+    timeoutRef.current = setTimeout(() => {
+      setContent(textContent || "");
+    }, DEBOUNCE)
   };
 
   return [content, { onChange }];

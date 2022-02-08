@@ -14,9 +14,7 @@ export const CardList: React.FC<CardListProps> = React.memo(({
   return (
     <article className={`w-full bg-gray-200 py-3 px-4 ${className}`}>
       <header className={"py-3 px-2"}>
-        <span>
-          {title}
-        </span>
+        <h2>{title}</h2>
       </header>
       
       <section>
