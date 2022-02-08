@@ -4,7 +4,7 @@ import { counter } from "@recoil/atoms";
 
 export const useCounter: () => [
   number,
-  { increase: () => void; decrease: () => void }
+  { increase: () => void; decrease: () => void },
 ] = () => {
   const [count, setCount] = useRecoilState(counter);
 

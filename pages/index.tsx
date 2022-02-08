@@ -1,13 +1,14 @@
 import React from "react";
 
-import { Container, Header, Main, Footer, Cards } from "@components";
+import { Card, Container, Footer, Header, Main } from "@components";
+import { CardStatus } from "@components/card";
 
 const Home: React.FC = () => {
   return (
     <Container>
       <Header />
       <Main />
-      <Cards />
+      <Card status={CardStatus.BACKLOG} title={"제목"} description={"설명"} />
       <Footer />
     </Container>
   );
