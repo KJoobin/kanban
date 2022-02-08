@@ -1,52 +1,73 @@
-import { renderHook, act } from "@testing-library/react-hooks";
-
+import { describe, expect, it } from "@jest/globals";
+import { act, renderHook } from "@testing-library/react-hooks";
 import { AllTheProviders } from "@test";
 
-import { useCounter } from "./useCounter";
+import { useTask } from "./useTask";
+import { TaskStatus } from "@recoil/atoms";
 
-/**
- * This test is provided as an example.
- * You can test your custom recoil hooks and their behaviors,
- * also you can create snapshot tests for your selectors.
- */
-
-describe("Recoil useCounter Hook", () => {
-  it("should set initial value to 0", async () => {
-    const { result } = renderHook(() => useCounter(), {
+describe("Recoil useTask Hook", () => {
+  it("should set initial value to empty object", async () => {
+    const { result } = renderHook(() => useTask(), {
       wrapper: AllTheProviders,
     });
-    const [count] = result.current;
+    const [taskList] = result.current;
 
-    expect(count).toEqual(0);
+    expect(taskList).toStrictEqual({});
   });
-
-  it("should increment counter by 1", async () => {
-    const { result } = renderHook(() => useCounter(), {
+  //
+  it("should make task", async () => {
+    const { result } = renderHook(() => useTask(), {
       wrapper: AllTheProviders,
     });
-    const [_, { increase }] = result.current;
+    const [_, { createTask }] = result.current;
+    let key = "";
+    act(() => {
+      key = createTask({ status: TaskStatus.BACKLOG, title: "할일", desc: "해야할 일" });
+    });
+
+    const [taskList] = result.current;
+
+    expect(taskList).toMatchObject({ [key]: { status: TaskStatus.BACKLOG, title:"할일", desc:"해야할 일" } })
+  });
+  //
+  it("should update task", async () => {
+    const { result } = renderHook(() => useTask(), {
+      wrapper: AllTheProviders,
+    });
+    const [_, { createTask }] = result.current;
+    let id = "";
 
     act(() => {
-      increase();
+      id = createTask({ status: TaskStatus.BACKLOG, title: "할할일", desc: "해야할 일" });
     });
 
-    const [count] = result.current;
+    let updateTaskResult = false;
+    const [__, { updateTask }] = result.current;
+    act(() => {
+      updateTaskResult = updateTask(id, { title: "할일" })
+    });
+    expect(updateTaskResult).toBe(true);
+    
+    const [taskList] = result.current
+    expect(taskList).toMatchObject({ [id]: { status: TaskStatus.BACKLOG, title: "할일", desc:"해야할 일", id } })
+  })
 
-    expect(count).toBe(1);
-  });
-
-  it("should decrement counter by 1", async () => {
-    const { result } = renderHook(() => useCounter(), {
+  it("should delete task", async () => {
+    const { result } = renderHook(() => useTask(), {
       wrapper: AllTheProviders,
     });
-    const [_, { decrease }] = result.current;
-
+    const [_, { createTask }] = result.current;
+    let id = "";
     act(() => {
-      decrease();
+      id = createTask({ status: TaskStatus.BACKLOG, title: "지워질 일", desc: "다 한일" });
     });
+    
+    const [__, { deleteTask }] = result.current
+    act(() => {
+      deleteTask(id);
+    })
 
-    const [count] = result.current;
-
-    expect(count).toBe(-1);
-  });
+    const [taskList] = result.current;
+    expect(taskList).toStrictEqual({});
+  })
 });

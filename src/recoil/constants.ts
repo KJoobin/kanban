@@ -1,3 +1,3 @@
 export enum Atoms {
-  Counter = "Counter",
+  Task = "Task",
 }
