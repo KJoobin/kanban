@@ -14,7 +14,7 @@ describe("Recoil useTask Hook", () => {
 
     expect(taskList).toStrictEqual({});
   });
-  //
+
   it("should make task", async () => {
     const { result } = renderHook(() => useTask(), {
       wrapper: AllTheProviders,
@@ -29,7 +29,7 @@ describe("Recoil useTask Hook", () => {
 
     expect(taskList).toMatchObject({ [key]: { status: TaskStatus.BACKLOG, title:"할일", desc:"해야할 일" } })
   });
-  //
+
   it("should update task", async () => {
     const { result } = renderHook(() => useTask(), {
       wrapper: AllTheProviders,

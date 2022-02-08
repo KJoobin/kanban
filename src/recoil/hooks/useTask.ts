@@ -2,7 +2,8 @@ import { useRecoilState } from "recoil";
 
 import { Task, taskListState } from "@recoil/atoms";
 import { v4 as uuid } from "uuid";
-import { deepCopy } from "@utils";
+import { deepCopy, storage } from "@utils";
+import { useEffect } from "react";
 
 export const useTask: () => [
   Record<string, Task>,
@@ -39,6 +40,23 @@ export const useTask: () => [
 
     setTaskList(deepCopyTaskList);
   };
+  
+  useEffect(() => {
+    const storageTaskList = storage.get("taskList");
+    if(storageTaskList) {
+      setTaskList(storageTaskList);
+    }
+  },[])
+
+  useEffect(() => {
+    const setTaskList = () => {
+      storage.set("taskList", taskList);
+    }
+    window.addEventListener("beforeunload",setTaskList);
+    return () => {
+      window.removeEventListener("beforeunload",setTaskList);
+    }
+  },[taskList])
 
   return [taskList, { createTask, updateTask, deleteTask }];
 };
