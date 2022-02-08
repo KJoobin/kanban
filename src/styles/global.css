@@ -10,3 +10,9 @@ body {
     "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
+@layer components {
+    .card {
+        @apply w-full border-solid border-2 border-gray-300 py-3 px-4;
+    }
+}
