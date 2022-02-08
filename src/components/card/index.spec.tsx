@@ -12,10 +12,10 @@ describe("카드 컴포넌트", () => {
   it("title 과, description 이 정상적으로 렌더가 된다", async () => {
     render(<Card status={CardStatus.BACKLOG} title={"할일1"} description={"해야하는일 1"} />);
 
-    const title = await screen.findByText("제목 : 할일1");
+    const title = await screen.findByText("할일1");
     expect(title).toBeTruthy();
 
-    const desc = await screen.findByText("설명 : 해야하는일 1");
+    const desc = await screen.findByText("해야하는일 1");
     expect(desc).toBeTruthy();
   });
 });

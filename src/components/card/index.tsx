@@ -6,7 +6,7 @@ export enum CardStatus {
   DONE = "done",
 }
 
-interface CardProps {
+interface CardProps extends React.HTMLAttributes<HTMLElement>{
   status: CardStatus;
   title?: string;
   description?: string;
@@ -15,19 +15,13 @@ interface CardProps {
 export const Card: React.FC<CardProps> = React.memo(({
   title = "",
   description = "",
+  className,
+  ...props
 }) => {
   return (
-    <div className={"card"}>
-      <div>
-        <span>
-          제목 : {title}
-        </span>
-      </div>
-      <div>
-        <span className={""}>
-          설명 : {description}
-        </span>
-      </div>
+    <div className={`card bg-white prose ${className}`} {...props}>
+      <h2 className={"h1"}>{title}</h2>
+      <p>{description}</p>
     </div>
   );
 });
