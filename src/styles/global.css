@@ -13,13 +13,17 @@ body {
 
 [contenteditable=true]:empty:after {
     content:attr(placeholder);
-    @apply text-gray-500
+    @apply text-gray-500 cursor-text
 }
 
 [contenteditable=false]:empty:after {
     content:attr(placeholder);
     @apply text-gray-500
 }
+:focus {
+    outline: 0;
+}
+
 @layer components {
     .card {
         @apply w-full border-solid border border-gray-500 rounded-lg py-3 px-4 bg-white;

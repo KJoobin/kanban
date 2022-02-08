@@ -35,15 +35,15 @@ To learn more about **superplate**, please check out the [Documentation](https:/
 
 ### 1.0.0
 #### 카드
-- [ ] ID
-- [ ] Created_at
-- [ ] Updated_at
-- [ ] 상태
-- [ ] 제목
-- [ ] 내용 
+- [x] ID
+- [x] Created_at
+- [x] Updated_at
+- [x] 상태
+- [x] 제목
+- [x] 내용 
 
 #### 카드 리스트
-- [ ] 새 카드 만들기
+- [x] 새 카드 만들기
 - [ ] 카드 상태에 따라 카드 정렬
 
 ## 기술 스택

@@ -8,17 +8,17 @@ interface CardProps extends React.HTMLAttributes<HTMLElement>{
   contentEditable?: boolean;
 }
 
-export const Card: React.FC<CardProps> = React.memo(({
+export const Card = React.memo(React.forwardRef<HTMLDivElement, CardProps>(({
   title = "",
   description = "",
   className,
   contentEditable = false,
   ...props
-}) => {
+}, ref) => {
   return (
-    <div className={`card prose ${className}`} {...props}>
-      <h2 className={"h1"} placeholder={contentEditable ? "제목을 입력하세요" : "제목 없음"} contentEditable={contentEditable}>{title}</h2>
+    <div ref={ref} className={`card prose ${className}`} {...props}>
+      <h2 placeholder={contentEditable ? "제목을 입력하세요" : "제목 없음"} contentEditable={contentEditable}>{title}</h2>
       <p className={"text-gray-500"} placeholder={contentEditable ? "설명을 입력하세요" : ""} contentEditable={contentEditable}>{description}</p>
     </div>
   );
-});
+}));

@@ -1,27 +1,61 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 
-import { Card, CardList, Container, Footer, Header } from "@components";
-import { CardStatus } from "@components/card";
-
-const taskCards = [
-  { id: 1, title:"제목", desc: "설명" }, 
-  { id: 2, title:"제목1", desc: "설명1" }, 
-  { id: 3, title:"제목2", desc: "설명2" }
-]
+import { Card, CardList } from "@components";
+import { Task, TaskStatus } from "@recoil/atoms";
+import { Container } from "@components/container";
+import { useTask } from "@recoil/hooks";
 
 const Home: React.FC = () => {
+  const [taskList, { createTask, updateTask }] = useTask();
+  const [tempTask, setTempTask] = useState<Pick<Task,"id" | "status" | "title" | "desc"> | null>();
+
+  const onCreateCard = (status:Task["status"]) => {
+    return () => {
+      if(tempTask) {
+        const { id: tempTaskId, ...taskInput } = tempTask;
+        updateTask(tempTaskId, taskInput);
+      }
+      const id = createTask({ status });
+      setTempTask({ id, status });
+    }
+  }
+
+  const tempCardRef = useCallback((node: HTMLDivElement) => {
+    if(!node || !node.hasChildNodes()) return;
+
+    const titleElement = node.childNodes[0] as HTMLElement;
+    titleElement.focus();
+  },[])
+
+  const onKeyDown:React.KeyboardEventHandler<HTMLElement> = (e) => {
+    // mac: metaKey, window: altKey
+    if(e.key !== "Enter" || !tempTask) return;
+    if(e.shiftKey) return;
+
+    const { id, ...taskInput } = tempTask;
+    updateTask(id, { ...taskInput });
+    setTempTask(null);
+  }
+
   return (
     <Container>
-      <Header />
       <main>
-        <CardList title={"백로그"}>
-          {taskCards.map((card) => {
-            return <Card className={"my-2"} key={card.id} status={CardStatus.BACKLOG} title={card.title} description={card.desc} />
+        <CardList title={"백 로그"} onCreateCard={onCreateCard(TaskStatus.BACKLOG)}>
+          {Object.values(taskList).map((card) => {
+            return <Card
+              key={card.id}
+              ref={tempCardRef}
+              className={"my-2"}
+              status={TaskStatus.BACKLOG}
+              title={card.title}
+              description={card.desc}
+              contentEditable={tempTask?.id === card.id}
+              onKeyDown={onKeyDown}
+            />
           })}
         </CardList>
         
       </main>
-      <Footer />
     </Container>
   );
 };
