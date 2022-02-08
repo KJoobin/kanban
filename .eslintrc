@@ -16,7 +16,10 @@
     "amd": true
   },
   "rules": {
-    "indent": ["error", 2]
+    "indent": [ "error", 2, { "SwitchCase": 1 }],
+    "quotes": [ "error", "double" ],
+    "array-bracket-spacing": [ "error", "never" ],
+    "object-curly-spacing": [ "error", "always" ]
   },
   "extends": [
     "eslint:recommended",
