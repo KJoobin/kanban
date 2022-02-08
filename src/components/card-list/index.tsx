@@ -22,7 +22,7 @@ export const CardList: React.FC<CardListProps> = React.memo(({
       </section>
 
       <button type={"button"} className={"w-full py-2 px-2 my-3 text-left hover:bg-gray-300"}>
-          새 카드 만들기
+        {"새 카드 만들기"}
       </button>
     </article>
   );
