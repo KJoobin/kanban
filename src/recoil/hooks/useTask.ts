@@ -1,8 +1,8 @@
 import { useRecoilState } from "recoil";
 
 import { Task, taskListState } from "@recoil/atoms";
-import { randomUUID } from "crypto";
-import { deepCopy } from "@util/deep-copy";
+import { v4 as uuid } from "uuid";
+import { deepCopy } from "@utils";
 
 export const useTask: () => [
   Record<string, Task>,
@@ -15,7 +15,7 @@ export const useTask: () => [
   const [taskList, setTaskList] = useRecoilState<Record<string,Task>>(taskListState);
 
   const createTask = (task:Omit<Task, "id" | "created_at" | "updated_at">) => {
-    const id = randomUUID();
+    const id = uuid();
     const createdAt = new Date().toISOString();
     const updatedAt = new Date().toISOString();
     setTaskList({ ...taskList, [id]: { ...task, id, created_at:createdAt, updated_at:updatedAt } })

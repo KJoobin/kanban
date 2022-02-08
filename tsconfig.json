@@ -43,10 +43,10 @@
       "@recoil": [
         "src/recoil"
       ],
-      "@util/*": [
+      "@utils/*": [
         "src/utils/*"
       ],
-      "@util": [
+      "@utils": [
         "src/utils"
       ],
       "@test/*": [
@@ -66,6 +66,6 @@
   "exclude": [
     "node_modules",
     "test/*",
-    "cypress/*"
+    "cypress/*",
   ]
 }
