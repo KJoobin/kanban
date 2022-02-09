@@ -47,9 +47,9 @@ describe("Recoil useTask Hook", () => {
       id = createTask({ title: "할일", desc: "해야할 일" }).id;
     });
     
-    const [ task, { getTask } ] = result.current;
+    const [ tasks, { getTask } ] = result.current;
 
-    expect(getTask(id)).toStrictEqual(task);
+    expect(getTask(id)).toStrictEqual(tasks[0]);
   })
 
   it("should update task", async () => {
