@@ -12,6 +12,16 @@ export const deepCopy = (value) => {
     return newArrayValue;
   }
 
+  if(value instanceof Map) {
+    const newMap = new Map();
+
+    value.forEach((originValue, key) => {
+      newMap.set(key, deepCopy(originValue));
+    })
+
+    return newMap; 
+  }
+
   if(typeof value === "object") {
     const keys = Object.keys(value);
     const values = Object.values(value);
@@ -23,6 +33,4 @@ export const deepCopy = (value) => {
     }
     return newObjectValue;
   }
-
-  return value;
 }

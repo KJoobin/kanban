@@ -3,19 +3,13 @@ import React from "react";
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import { Card as CardComponent } from "./index";
-import { TaskStatus } from "@recoil/atoms";
 
 export default {
   title: "Components/Card",
   component: CardComponent,
   argTypes: {
     status: {
-      options: Object.entries(TaskStatus).reduce((acc, cur) => {
-        const key = cur[0] as keyof TaskStatus;
-        const value = cur[1];
-        return { ...acc, [key]: value };
-      }, {} as Record<keyof TaskStatus, string>),
-      control: { type: "radio" },
+      control: { type: "text" },
       description: "칸반보드 에서의 카드 상태",
     },
     title: {
@@ -28,7 +22,7 @@ export default {
     },
   },
   args: {
-    status: TaskStatus.BACKLOG,
+    status: "backlog",
     title: "Title",
     description: "Description",
   },

@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Card, CardList } from "@components";
 import { Task, TaskStatus } from "@recoil/atoms";
 import { Container } from "@components/container";
-import { useContent, useTask } from "@recoil/hooks";
+import { useContent, useTaskListMap } from "@recoil/hooks";
 
 const taskStatus = [
   { status: TaskStatus.BACKLOG, title: "백 로그" },
@@ -12,7 +12,7 @@ const taskStatus = [
 ]
 
 const Home: React.FC = () => {
-  const [taskList, { createTask, updateTask }] = useTask();
+  const [taskList, { createTask, updateTask }] = useTaskListMap();
   const [tempTask, setTempTask] = useState<Pick<Task,"id" | "status" | "title" | "desc"> | null>();
   const [title, { onChange: onChangeTitle }] = useContent();
   const [desc, { onChange: onChangeDesc }] = useContent();

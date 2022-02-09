@@ -80,4 +80,52 @@ describe("deep-copy", () => {
     expect(copied.b.c).toBe(1);
     expect(copied.d[0]).toBe(5);
   })
+  
+  it("map inner object", () => {
+    const map = new Map();
+    map.set("c", 1);
+    map.set("d", 5);
+    const obj = { a:1, b: map }
+
+    const copied  = deepCopy(obj);
+
+    expect(copied !== obj);
+    expect(copied.a).toBe(1);
+    expect(copied.b.get("c")).toBe(1);
+    expect(copied.b.get("d")).toBe(5);
+  })
+  
+  it("deep copy task list map", () => {
+    const task = new Map();
+    task.set(0, { id: "12345" });
+    task.set(1, { id: "23456" });
+    const taskListMap = [{ id:"idid", task }];
+
+    const copied = deepCopy(taskListMap);
+
+    expect(copied !== taskListMap);
+    expect(copied[0]).toHaveProperty("id")
+    expect(copied[0]).toHaveProperty("task")
+    expect(copied[0].id).toBe("idid");
+    expect(copied[0] !== taskListMap[0]).toBe(true);
+    expect(copied[0].task !== taskListMap[0].task).toBe(true);
+    expect(copied[0].task.size).toBe(2);
+    expect(copied[0].task.get(0)).toStrictEqual({ id: "12345" });
+    expect(copied[0].task.get(1)).toStrictEqual({ id: "23456" });
+  })
+
+  it("map type", () => {
+    const map = new Map();
+    map.set("a", 1);
+    map.set("b", "c");
+    map.set("d", "f");
+    
+    const copied = deepCopy(map);
+    expect(copied !== map).toBe(true);
+    expect(copied.size === map.size).toBe(true);
+    
+    copied.forEach((copiedEl, copiedKey) => {
+      expect(copied.get(copiedKey) === map.get(copiedKey)).toBe(true);
+    })
+  })
 })

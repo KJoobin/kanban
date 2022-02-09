@@ -1,4 +1,4 @@
 export enum Atoms {
-  Task = "Task",
+  Tasks = "Tasks",
   Content = "Content"
 }

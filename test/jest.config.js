@@ -16,4 +16,5 @@ module.exports = {
     ...pathsToModuleNameMapper(paths, { prefix: "<rootDir>/" }),
     "\\.(scss|sass|css)$": "identity-obj-proxy",
   },
+  verbose: true
 };
