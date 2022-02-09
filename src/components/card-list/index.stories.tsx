@@ -4,7 +4,6 @@ import { ComponentMeta, ComponentStory } from "@storybook/react";
 
 import { CardList as CardListComponent } from "./index";
 import { Card } from "@components";
-import { CardStatus } from "@components/card";
 
 export default {
   title: "Components/Card List",
@@ -29,8 +28,8 @@ export const CardList = Template.bind({});
 export const CardListWithCard = Template.bind({});
 CardListWithCard.args = {
   children:<>
-    <Card status={CardStatus.BACKLOG} title={"할일"} description={"해야할 일"} className={"my-2"}/>
-    <Card status={CardStatus.BACKLOG} title={"할일1"} description={"해야할 일1"} className={"my-2"}/>
+    <Card status={"backlog"} title={"할일"} description={"해야할 일"} className={"my-2"}/>
+    <Card status={"backlog"} title={"할일1"} description={"해야할 일1"} className={"my-2"}/>
   </>
 }
 

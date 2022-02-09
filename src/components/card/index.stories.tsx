@@ -2,19 +2,14 @@ import React from "react";
 
 import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { Card as CardComponent, CardStatus } from "./index";
+import { Card as CardComponent } from "./index";
 
 export default {
   title: "Components/Card",
   component: CardComponent,
   argTypes: {
     status: {
-      options: Object.entries(CardStatus).reduce((acc, cur) => {
-        const key = cur[0] as keyof CardStatus;
-        const value = cur[1];
-        return { ...acc, [key]: value };
-      }, {} as Record<keyof CardStatus, string>),
-      control: { type: "radio" },
+      control: { type: "text" },
       description: "칸반보드 에서의 카드 상태",
     },
     title: {
@@ -27,7 +22,7 @@ export default {
     },
   },
   args: {
-    status: CardStatus.BACKLOG,
+    status: "backlog",
     title: "Title",
     description: "Description",
   },

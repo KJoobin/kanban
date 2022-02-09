@@ -4,10 +4,11 @@
   "plugins": ["@typescript-eslint"],
   "overrides": [
     {
-      "files": ["*.js", "*.spec.tsx"],
+      "files": ["*.js", "*.spec.tsx", "*.spec.ts"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off",
-        "react/react-in-jsx-scope": 0
+        "@typescript-eslint/no-unused-vars": "off",
+        "react/react-in-jsx-scope": "off"
       }
     }
   ],
@@ -19,7 +20,7 @@
   "rules": {
     "indent": ["error", 2, {"SwitchCase": 1}],
     "quotes": ["error", "double"],
-    "array-bracket-spacing": ["error", "never"],
+    "array-bracket-spacing": ["error", "always"],
     "object-curly-spacing": ["error", "always"],
     "react/jsx-curly-brace-presence": ["error", {"props": "always", "children": "always"}],
     "react/prop-types": 0,

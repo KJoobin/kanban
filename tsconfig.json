@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "downlevelIteration": true,
     "lib": [
       "dom",
       "dom.iterable",
@@ -42,6 +43,12 @@
       ],
       "@recoil": [
         "src/recoil"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@utils": [
+        "src/utils"
       ],
       "@test/*": [
         "test/*"

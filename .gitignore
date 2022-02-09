@@ -8,3 +8,9 @@ node_modules
 .env
 .env.*
 !.env.example
+# ts build info
+tsconfig.tsbuildinfo
+#yarn error log
+yarn-error.log
+# jest
+coverage

@@ -1,3 +1,6 @@
 export enum Atoms {
-  Counter = "Counter",
+  Tasks = "Tasks",
+  TaskLists = "TaskLists",
+  TaskListMap = "TaskListMap",
+  Content = "Content"
 }
