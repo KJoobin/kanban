@@ -24,11 +24,10 @@ export const useTaskListMap: () => [
       task = createTask(input);
       addTask(id, task.id);
     }catch (e) {
-      console.log(e);
       if(task) {
         deleteTask(task.id);
       }
-      throw new Error("테스크 생성중에 에러가 발생했습니다.");
+      throw e;
     }
     return task;
   } 
