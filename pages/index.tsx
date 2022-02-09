@@ -1,21 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
 
 import { Card, CardList } from "@components";
-import { Task, TaskStatus } from "@recoil/atoms";
+import { Task } from "@recoil/atoms";
 import { Container } from "@components/container";
 import { useContent, useTaskListMap } from "@recoil/hooks";
 
-const taskStatus = [
-  { status: TaskStatus.BACKLOG, title: "백 로그" },
-  { status: TaskStatus.IN_PROGRESS, title: "진행중" },
-  { status: TaskStatus.DONE, title: "완료" },
-]
-
 const Home: React.FC = () => {
-  const [taskList, { createTask, updateTask }] = useTaskListMap();
-  const [tempTask, setTempTask] = useState<Pick<Task,"id" | "status" | "title" | "desc"> | null>();
-  const [title, { onChange: onChangeTitle }] = useContent();
-  const [desc, { onChange: onChangeDesc }] = useContent();
+  const [ taskListMap, { createTask, updateTask, updateTaskOrder, createTaskList } ] = useTaskListMap();
+  const [ tempTask, setTempTask ] = useState<Pick<Task,"id" | "title" | "desc"> | null>();
+  const [ title, { onChange: onChangeTitle } ] = useContent();
+  const [ desc, { onChange: onChangeDesc } ] = useContent();
 
   const tempCardRef = useCallback((node: HTMLDivElement) => {
     if(!node || !node.hasChildNodes()) return;
@@ -24,14 +18,14 @@ const Home: React.FC = () => {
     titleElement.focus();
   },[])
 
-  const onCreateCard = (status:Task["status"]) => {
+  const onCreateCard = (listId: string) => {
     return () => {
       if(tempTask) {
         const { id: tempTaskId, ...taskInput } = tempTask;
         updateTask(tempTaskId, taskInput);
       }
-      const id = createTask({ status });
-      setTempTask({ id, status });
+      const task = createTask(listId, {});
+      setTempTask(task);
     }
   }
 
@@ -49,27 +43,38 @@ const Home: React.FC = () => {
       if(!prevTempTask) return null;
       return { ...prevTempTask, title }
     })
-  },[title])
+  },[ title ])
 
   useEffect(() => {
     setTempTask(prevTempTask => {
       if(!prevTempTask) return null;
       return { ...prevTempTask, desc }
     })
-  },[desc])
+  },[ desc ])
 
 
+  const [ groupName, setGroupName ] = useState<string>("");
+  const onChangeGroup:React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setGroupName(e.target.value);
+  }
+  const onSubmitGroupForm:React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    if(groupName === "") return;
+    
+    createTaskList({ title: groupName, status: groupName });
+    setGroupName("")
+  }
   return (
     <Container>
       <main className={"flex"}>
-        {taskStatus.map(({ status:taskStatus, title })=> {
-          return <CardList key={taskStatus} title={title} onCreateCard={onCreateCard(taskStatus)}>
-            {Object.values(taskList).filter(card => card.status === taskStatus).map((card) => {
+        {taskListMap.map(({ id, status: taskStatus, title, tasks })=> {
+          return <CardList className={"mx-1 my-1"} key={taskStatus} title={title} onCreateCard={onCreateCard(id)}>
+            {[ ...tasks.values() ].map((card) => {
               return <Card
                 key={card.id}
                 ref={tempCardRef}
                 className={"my-2"}
-                status={TaskStatus.BACKLOG}
+                status={taskStatus}
                 title={card.title}
                 description={card.desc}
                 contentEditable={tempTask?.id === card.id}
@@ -79,9 +84,18 @@ const Home: React.FC = () => {
               />
             })}
           </CardList>
-          
         })}
-        
+
+        <form onSubmit={onSubmitGroupForm}>
+          <input 
+            className={"border-solid border border-gray-500 rounded-lg pl-1"} 
+            type={"text"} 
+            placeholder={"새 그룹 이름"} 
+            value={groupName}
+            onChange={onChangeGroup}
+          />
+          <button className={"px-4 py-1 hover:bg-gray-300"} type={"submit"}>{"+"}</button>
+        </form>
       </main>
     </Container>
   );
