@@ -6,10 +6,11 @@ import { v4 as uuid } from "uuid";
 import { deepCopy, storage } from "@utils";
 import { useEffect } from "react";
 
-type TaskInput = Omit<Task, "id" | "created_at" | "updated_at">;
+export type TaskInput = Omit<Task, "id" | "created_at" | "updated_at">;
 
-interface UseTasks {
+export interface UseTasks {
   tasks: Array<Task>;
+  getTask: (id:string) => Task;
   createTask: (input:TaskInput) => Task;
   updateTask: (id:string, input: Partial<TaskInput>) => Task;
   deleteTask: (id:string) => boolean;
@@ -19,7 +20,14 @@ export const useTasks: () => [
   UseTasks["tasks"],
   Omit<UseTasks, "tasks">
 ] = () => {
-  const [tasks, setTasks] = useRecoilState<UseTasks["tasks"]>(tasksState);
+  const [ tasks, setTasks ] = useRecoilState<UseTasks["tasks"]>(tasksState);
+
+  const getTask:UseTasks["getTask"] = (id) => {
+    const index = tasks.findIndex(task => task.id === id);
+    if(index === -1) throw new Error("테스크가 존재하지 않습니다.");
+
+    return tasks[index];
+  }
 
   const createTask:UseTasks["createTask"] = (taskInput) => {
     const id = uuid();
@@ -53,7 +61,7 @@ export const useTasks: () => [
     const taskIndex = copiedTasks.findIndex(taskList => taskList.id === id);
     if(taskIndex === -1) throw new Error("존재하지 않는 테스크 입니다.");
 
-    setTasks([...copiedTasks.slice(0, taskIndex), ...copiedTasks.slice(taskIndex + 1)]);
+    setTasks([ ...copiedTasks.slice(0, taskIndex), ...copiedTasks.slice(taskIndex + 1) ]);
 
     return true;
   };
@@ -73,7 +81,7 @@ export const useTasks: () => [
     return () => {
       window.removeEventListener("beforeunload",setTaskList);
     }
-  },[tasks])
+  },[ tasks ])
 
-  return [tasks, { createTask, updateTask, deleteTask }];
+  return [ tasks, { getTask, createTask, updateTask, deleteTask } ];
 };

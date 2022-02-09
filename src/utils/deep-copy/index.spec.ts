@@ -28,7 +28,7 @@ describe("deep-copy", () => {
   })
 
   it("1deps array", () => {
-    const arr = [1,2,3,4,5,"str",undefined, null];
+    const arr = [ 1,2,3,4,5,"str",undefined, null ];
     const copied = deepCopy(arr);
     expect(arr !== copied).toBe(true);
 
@@ -38,7 +38,7 @@ describe("deep-copy", () => {
   })
   
   it("2deps array", () => {
-    const arr = [1,2,3,[1,2,3,4],{ a:"1",b:"2" }];
+    const arr = [ 1,2,3,[ 1,2,3,4 ],{ a:"1",b:"2" } ];
     const copied = deepCopy(arr);
     expect(arr !== copied).toBe(true);
     expect(arr.length === copied.length).toBe(true);
@@ -70,7 +70,7 @@ describe("deep-copy", () => {
   })
 
   it("2deps object", () => {
-    const obj = { a:1, b: { c:1 }, d:[5] }
+    const obj = { a:1, b: { c:1 }, d:[ 5 ] }
     const copied = deepCopy(obj);
 
     expect(copied !== obj).toBe(true);
@@ -99,7 +99,7 @@ describe("deep-copy", () => {
     const task = new Map();
     task.set(0, { id: "12345" });
     task.set(1, { id: "23456" });
-    const taskListMap = [{ id:"idid", task }];
+    const taskListMap = [ { id:"idid", task } ];
 
     const copied = deepCopy(taskListMap);
 

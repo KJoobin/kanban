@@ -12,3 +12,5 @@ node_modules
 tsconfig.tsbuildinfo
 #yarn error log
 yarn-error.log
+# jest
+coverage

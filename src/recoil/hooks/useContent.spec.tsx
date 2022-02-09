@@ -9,7 +9,7 @@ describe("Recoil useContent Hook", () => {
     const { result } = renderHook(() => useContent(), {
       wrapper: AllTheProviders,
     });
-    const [content] = result.current;
+    const [ content ] = result.current;
 
     expect(content).toBe("");
   });
@@ -20,7 +20,7 @@ describe("Recoil useContent Hook", () => {
       wrapper: AllTheProviders,
     });
     
-    const [_, { onChange }] = result.current;
+    const [ _, { onChange } ] = result.current;
     render(<h1 contentEditable={true} onInput={onChange} data-testid={"heading"}/>)
     const heading = await screen.findByTestId("heading");
     act(() => {
@@ -29,7 +29,7 @@ describe("Recoil useContent Hook", () => {
       jest.runOnlyPendingTimers();
     });
 
-    const [content] = result.current;
+    const [ content ] = result.current;
 
     expect(content).toBe("input heading");
   })
@@ -43,8 +43,8 @@ describe("Recoil useContent Hook", () => {
       wrapper: AllTheProviders,
     });
 
-    const [_, { onChange: onChangeTitle }] = titleResult.current;
-    const [__, { onChange: onChangeDesc }] = descResult.current;
+    const [ _, { onChange: onChangeTitle } ] = titleResult.current;
+    const [ __, { onChange: onChangeDesc } ] = descResult.current;
     render(<>
       <h1 contentEditable={true} onInput={onChangeTitle} data-testid={"heading"}/>
       <p contentEditable onInput={onChangeDesc} data-testid={"paragraph"} />
@@ -58,10 +58,10 @@ describe("Recoil useContent Hook", () => {
       // debounce
       jest.runOnlyPendingTimers();
     });
-    const [title] = titleResult.current;
+    const [ title ] = titleResult.current;
     expect(title).toBe("input heading");
 
-    const [desc] = descResult.current;
+    const [ desc ] = descResult.current;
     expect(desc).toBe("input paragraph");
   })
 });

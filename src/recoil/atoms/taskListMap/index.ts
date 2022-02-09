@@ -1,17 +1,14 @@
 import { atom } from "recoil";
 import { Atoms } from "@recoil/constants";
 import { Task } from "@recoil/atoms/tasks";
+import { TaskList } from "@recoil/atoms";
 
-export interface TaskList {
-  id: string;
-  status: string;
-  title: string;
-  tasks: Map<number, Pick<Task, "id">>;
-  created_at: string;
-  updated_at: string;
+
+export interface TaskListMap extends TaskList {
+  tasks: Map<number, Task>
 }
 
-export const taskListMapStatus = atom<Array<TaskList>>({
+export const taskListMapStatus = atom<Array<TaskListMap>>({
   key: Atoms.TaskListMap,
   default: []
 });

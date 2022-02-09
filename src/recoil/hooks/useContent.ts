@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 const DEBOUNCE = 300;
 
 export const useContent: () => [string, { onChange: React.FormEventHandler<HTMLElement> }] = () => {
-  const [content, setContent] = useState<string>("");
+  const [ content, setContent ] = useState<string>("");
   const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   const onChange:React.FormEventHandler<HTMLElement> = (e) => {
@@ -19,5 +19,5 @@ export const useContent: () => [string, { onChange: React.FormEventHandler<HTMLE
     }, DEBOUNCE)
   };
 
-  return [content, { onChange }];
+  return [ content, { onChange } ];
 };

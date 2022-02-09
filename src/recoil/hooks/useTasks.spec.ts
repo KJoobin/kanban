@@ -9,7 +9,7 @@ describe("Recoil useTask Hook", () => {
     const { result } = renderHook(() => useTasks(), {
       wrapper: AllTheProviders,
     });
-    const [taskList] = result.current;
+    const [ taskList ] = result.current;
 
     expect(taskList).toStrictEqual([]);
   });
@@ -19,12 +19,12 @@ describe("Recoil useTask Hook", () => {
       wrapper: AllTheProviders,
     });
 
-    let [tasks, { createTask }] = result.current;
+    let [ tasks, { createTask } ] = result.current;
     act(() => {
       createTask({ title: "할일", desc: "해야할 일" });
     });
 
-    [tasks, { createTask }] = result.current;
+    [ tasks, { createTask } ] = result.current;
     expect(tasks[0]).toMatchObject({ title:"할일", desc:"해야할 일" } )
 
 
@@ -35,24 +35,40 @@ describe("Recoil useTask Hook", () => {
     tasks = result.current[0];
     expect(tasks[1]).toMatchObject({ title:"할일1", desc:"해야할 일1" } )
   });
+  
+  it("get task", () => {
+    const { result } = renderHook(() => useTasks(), {
+      wrapper: AllTheProviders,
+    });
+
+    const [ _, { createTask } ] = result.current;
+    let id = "";
+    act(() => {
+      id = createTask({ title: "할일", desc: "해야할 일" }).id;
+    });
+    
+    const [ task, { getTask } ] = result.current;
+
+    expect(getTask(id)).toStrictEqual(task);
+  })
 
   it("should update task", async () => {
     const { result } = renderHook(() => useTasks(), {
       wrapper: AllTheProviders,
     });
-    const [_, { createTask }] = result.current;
+    const [ _, { createTask } ] = result.current;
 
     let id = ""
     act(() => {
       id = createTask({ title: "할할일", desc: "해야할 일" }).id;
     });
 
-    const [__, { updateTask }] = result.current;
+    const [ __, { updateTask } ] = result.current;
     act(() => {
       updateTask(id, { title: "할일" })
     });
 
-    const [tasks] = result.current;
+    const [ tasks ] = result.current;
     expect(tasks[0]).toMatchObject({ title: "할일", desc: "해야할 일" });
   })
 
@@ -60,18 +76,18 @@ describe("Recoil useTask Hook", () => {
     const { result } = renderHook(() => useTasks(), {
       wrapper: AllTheProviders,
     });
-    const [_, { createTask }] = result.current;
+    const [ _, { createTask } ] = result.current;
     let id = "";
     act(() => {
       id = createTask({ title: "지워질 일", desc: "다 한일" }).id;
     });
     
-    const [__, { deleteTask }] = result.current
+    const [ __, { deleteTask } ] = result.current
     act(() => {
       deleteTask(id);
     })
 
-    const [taskList] = result.current;
+    const [ taskList ] = result.current;
     expect(taskList).toStrictEqual([]);
   })
 });
